@@ -1,0 +1,26 @@
+<%- include('../partials/header') %>
+
+<table id="list">
+  <thead>
+    <tr>
+      <th>Habit</th>
+      <th>Start Date</th>
+      <th>Target Date</th>
+      <th>Progress</th>
+      <th></th>
+    </tr>
+  </thead>
+  <tbody>
+    <% habits.forEach(function(h) { %>
+    <tr>
+      <td><%= h.title %></td>
+      <td><%= h.formattedStartDate %></td>
+      <td><%= h.formattedTargetDate %></td>
+      <td><%= h.progress %></td>
+      <td><a href="/habits/<%= h._id %>">DETAILS</a></td>
+    </tr>
+    <% }); %>
+  </tbody>
+</table>
+
+<%- include('../partials/footer') %>

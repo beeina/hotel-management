@@ -1,0 +1,73 @@
+<%- include('../partials/header') %>
+
+<section id="show-page">
+    <td class="habit-user"><img alt="avatar" src="<%= habit.userAvatar %>" referrerpolicy="no-referrer" ><%= habit.userName %></td>
+    <div><strong>Title: </strong>
+      <%= habit.title %></div>
+    <div><strong>Start Date: </strong>
+      <%= habit.formattedStartDate %></div>
+    <div><strong>Target Date: </strong>
+      <%= habit.formattedTargetDate %></div>
+    <div><strong>Progress: </strong>
+      <%= habit.progress %></div>
+
+    <br><br><h2>Goal</h2>
+<form id="add-goal-form" class="add-edit-form" method="POST"
+  action="/habits/<%= habit._id %>/goal">
+
+  <label><strong>Goal Description: </strong></label>
+  <input type="text" name="goalDescription"/>
+
+  <label><strong>Progress: </strong></label>
+  <select name="progress">
+      <option value="0">0%</option>
+      <option value="25">25%</option>
+      <option value="50">50%</option>
+      <option value="75">75%</option>
+      <option value="100">100%</option></select  
+  </select><br><br>
+  <input type="submit" value="Add Goal">
+</form>
+
+<% if (habit.goal.length) { %>
+  <table>
+
+    <thead>
+      <tr>
+      
+        <th>Goal</th>
+        <th>Progress</th>
+        <th></th>
+        <th></th>
+      </tr>
+    </thead>
+
+    <tbody>
+
+      <% let total = 0 %>
+      <% habit.goal.forEach(function(g) { %>
+        <tr>
+          <td><%= g.goalDescription %></td>
+          <td><%= g.progress %></td>
+          <td>
+              <form action="/goals/<%= habit._id %>/<%= g._id %>?_method=DELETE" method="POST">
+                <button type="submit">X</button>
+              </form>
+          </td>
+          <td>
+            <button onclick="location.href='/goals/edit/<%= habit._id %>/<%= g._id %>'" type="button">
+              EDIT GOAL</button>
+          </td>
+          <br>
+        </tr>
+      <% }); %>
+    
+    </tbody>
+  </table>
+<% } else { %>
+  <h5>No Goals Yet</h5>
+<% } %>
+  
+<%- include('../partials/footer') %>
+
+
